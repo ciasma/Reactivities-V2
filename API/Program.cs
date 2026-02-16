@@ -1,3 +1,7 @@
+using System.Runtime.InteropServices;
+using Application.Activities;
+using Application.Activities.Commands;
+using Application.Core;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
@@ -12,6 +16,11 @@ builder.Services.AddDbContext<AppDbContext>(opt=>
 });
 
 builder.Services.AddCors();  //SINCE IT ADDS AN HEADer we need to add middleware
+builder.Services.AddMediatR(x =>
+x.RegisterServicesFromAssemblyContaining<CreateActivity.Handler>());
+
+builder.Services.AddAutoMapper(typeof(MappingProfiles).Assembly);
+
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 
 var app = builder.Build();
